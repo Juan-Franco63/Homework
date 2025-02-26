@@ -4,7 +4,7 @@ const App = () => {
     return (
         <>
             <h1>Hola Mundo</h1>
-            <h2>Mi primer Vite app</h2>
+            <h2>Bienvenido!</h2>
 
         </>
     )
