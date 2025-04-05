@@ -1,0 +1,36 @@
+// Diferencias entre Arrow Functions y Regular Functions
+
+// Las Arrow Functions son una forma compacta de escribir funciones.
+// No tienen su propio contexto de `this` (lexical scoping).
+// Sintaxis más corta: () => {}
+
+// Ejemplo de Arrow Function:
+const verificarParOImparArrow = (numero) => {
+  if (numero % 2 === 0) {
+    console.log(`${numero} es par.`);
+  } else {
+    console.log(`${numero} es impar.`);
+  }
+};
+
+// Las Regular Functions tienen su propio contexto de `this`.
+// Sintaxis más larga: function nombreFuncion() {}
+
+// Ejemplo de Regular Function:
+function verificarParOImparRegular(numero) {
+  if (numero % 2 === 0) {
+    console.log(`${numero} es par.`);
+  } else {
+    console.log(`${numero} es impar.`);
+  }
+}
+
+// Pruebas de las funciones
+
+// Usando Arrow Function
+verificarParOImparArrow(4);  // Debería imprimir "4 es par."
+verificarParOImparArrow(7);  // Debería imprimir "7 es impar."
+
+// Usando Regular Function
+verificarParOImparRegular(10); // Debería imprimir "10 es par."
+verificarParOImparRegular(15); // Debería imprimir "15 es impar."
