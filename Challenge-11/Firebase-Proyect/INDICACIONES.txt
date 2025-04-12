@@ -1,0 +1,7 @@
+Si el codigo no corre o le hacen falta archivos node-modules
+
+los npm usados fueron estos
+
+npm install firebase react-redux @reduxjs/toolkit react-router-dom
+
+aparte del npm install original
