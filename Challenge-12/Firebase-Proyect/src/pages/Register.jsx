@@ -1,4 +1,4 @@
-// src/pages/Register.jsx
+
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { startRegisterWithEmailPassword } from '../store/thunks'
@@ -16,7 +16,7 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault()
 
-    // Enviar la info al thunk
+    
     dispatch(startRegisterWithEmailPassword({ email, password, displayName }))
   }
 
