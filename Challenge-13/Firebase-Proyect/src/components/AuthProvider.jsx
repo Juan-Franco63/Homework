@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // 👇 Mientras está "checking", mostramos loader
+  
   if (status === 'checking') {
     return <p style={{ textAlign: 'center', marginTop: '50px' }}>Cargando...</p>;
   }

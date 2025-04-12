@@ -4,6 +4,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import Crud from './pages/Crud';
+import RealtimeChat from './pages/RealtimeChat';
 
 import PrivateRoute from './router/PrivateRoute';
 import PublicRoute from './router/PublicRoute';
@@ -56,6 +57,14 @@ function App() {
         </PrivateRoute>
         }
       />
+      <Route
+        path="/chat"
+        element={
+          <PrivateRoute>
+            <RealtimeChat />
+          </PrivateRoute>
+          }
+        />
 
       {/* Catch-all para rutas no encontradas */}
       <Route path="*" element={<Navigate to="/" />} />
