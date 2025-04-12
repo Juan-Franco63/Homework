@@ -1,11 +1,12 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../firebase/config";
 import { login, logout, checkingCredentials } from "../store/authSlice";
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
+  const { status } = useSelector(state => state.auth);
 
   useEffect(() => {
     dispatch(checkingCredentials());
@@ -25,6 +26,11 @@ const AuthProvider = ({ children }) => {
 
     return () => unsubscribe();
   }, []);
+
+  // 👇 Mientras está "checking", mostramos loader
+  if (status === 'checking') {
+    return <p style={{ textAlign: 'center', marginTop: '50px' }}>Cargando...</p>;
+  }
 
   return children;
 };

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth';
 import { auth } from "../firebase/config";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom'; // 👈 Importamos useLocation
 import { login, logout, checkingCredentials } from '../store/authSlice';
 import { startGoogleSignIn } from '../store/thunks';
 
@@ -10,12 +10,16 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation(); // 👈 Usamos useLocation para obtener la ruta previa
   const { status, errorMessage, displayName, photoUrl, email: userEmail } = useSelector((state) => state.auth);
   const loading = status === 'checking';
 
   const handleLogin = async () => {
     dispatch(checkingCredentials());
     try {
+      await setPersistence(auth, browserSessionPersistence);
+
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
@@ -25,6 +29,11 @@ const Login = () => {
         displayName: user.displayName || "",
         photoUrl: user.photoURL || ""
       }));
+
+      // 👇 Redirigimos a la última ruta visitada, o al dashboard si no había una
+      const redirectTo = location.state?.from?.pathname || '/dashboard';
+      navigate(redirectTo);
+
     } catch (err) {
       dispatch(logout({ errorMessage: err.message }));
     }
@@ -38,7 +47,7 @@ const Login = () => {
   return (
     <div className="page">
       <h2>Login</h2>
-  
+
       {status === 'authenticated' ? (
         <>
           <p>Bienvenido, {displayName || userEmail}</p>
