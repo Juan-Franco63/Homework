@@ -1,0 +1,106 @@
+/* Estilos globales */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0a0a0a; /* Negro oscuro */
+  color: #ffffff; /* Texto blanco */
+  font-family: 'Arial', sans-serif;
+}
+
+h1, h2, h3 {
+  color: #1e90ff; /* Azul fuerte (DodgerBlue) */
+}
+
+nav {
+  background-color: #1e1e1e;
+  padding: 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #1e90ff;
+}
+
+nav button {
+  background-color: #1e90ff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+nav button:hover {
+  background-color: #0b64c3;
+}
+
+div {
+  padding: 20px;
+}
+
+form {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #1e90ff;
+  border-radius: 5px;
+  background-color: #000000;
+  color: white;
+}
+
+button[type="submit"] {
+  background-color: #1e90ff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  color: white;
+  width: 100%;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0b64c3;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background-color: #1e1e1e;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+li button {
+  margin-left: 10px;
+  background-color: #1e90ff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+li button:hover {
+  background-color: #0b64c3;
+}
