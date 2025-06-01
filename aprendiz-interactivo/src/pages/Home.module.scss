@@ -1,0 +1,70 @@
+@import "../styles/variables";
+
+.homeContainer {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  h1 {
+    color: $primary-color;
+  }
+
+  p {
+    color: #444;
+  }
+
+  button {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    margin: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #1d6fc2; // reemplazo de darken
+    }
+  }
+}
+
+.userInfo {
+  margin: 1rem 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.authButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.navLinks {
+  margin-top: 2rem;
+  text-align: left;
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+
+    li {
+      margin: 0.5rem 0;
+
+      a {
+        color: $primary-color;
+        text-decoration: none;
+        font-weight: 500;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

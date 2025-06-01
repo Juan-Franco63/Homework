@@ -1,0 +1,89 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Reader from "./pages/Reader";
+import Favorites from "./pages/Favorites";
+import History from "./pages/History";
+import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
+import Header from "./components/Header";
+import TopicPlayer from "./components/TopicPlayer";
+import TreeViewer from "./components/TreeViewer";
+import FirestoreTree from "./components/FirestoreTree";
+
+export default function App() {
+  return (
+    <Router>
+      <Header />
+      <Routes>
+        {/* Rutas públicas */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Rutas privadas */}
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/reader"
+          element={
+            <PrivateRoute>
+              <Reader />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/favorites"
+          element={
+            <PrivateRoute>
+              <Favorites />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <PrivateRoute>
+              <History />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/playlist"
+          element={
+            <PrivateRoute>
+              <TopicPlayer />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/tree"
+          element={
+            <PrivateRoute>
+              <TreeViewer />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/tree-editor"
+          element={
+            <PrivateRoute>
+              <FirestoreTree />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Ruta no encontrada */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
+  );
+}

@@ -1,0 +1,49 @@
+@import "../styles/variables";
+
+.historyContainer {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    color: $primary-color;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #777;
+  }
+}
+
+.historyList {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.historyItem {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #eef5ff;
+  border-left: 5px solid $primary-color;
+  border-radius: 8px;
+
+  h3 {
+    margin: 0 0 0.5rem;
+    color: #2c3e50;
+  }
+
+  p {
+    margin: 0 0 0.5rem;
+    color: #34495e;
+  }
+
+  .level {
+    font-size: 0.9rem;
+    color: #666;
+  }
+}

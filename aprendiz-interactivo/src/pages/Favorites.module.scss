@@ -1,0 +1,43 @@
+@import "../styles/variables";
+
+.favoritesContainer {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    color: $primary-color;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #666;
+  }
+}
+
+.favoritesList {
+  list-style: none;
+  padding: 0;
+}
+
+.favoriteItem {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-left: 5px solid $primary-color;
+  background-color: #f0f4ff;
+  border-radius: 8px;
+
+  h3 {
+    margin: 0 0 0.5rem;
+    color: #2c3e50;
+  }
+
+  p {
+    margin: 0;
+    color: #34495e;
+  }
+}
