@@ -1,0 +1,95 @@
+/* src/App.css */
+
+/* Estilos generales */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #333;  /* Fondo gris oscuro para toda la página */
+  margin: 0;
+  padding: 0;
+  color: #f4f6f9;  /* Texto claro para contraste */
+  min-height: 100vh;  /* Asegura que el fondo ocupe toda la altura de la pantalla */
+}
+
+/* Barra lateral */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #2c3e50;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 30px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.sidebar:hover {
+  width: 270px;
+}
+
+/* Título de la barra lateral */
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar h2 {
+  font-size: 22px;
+  color: white;
+  margin: 0;
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  margin-left: 270px;  /* Ajusta según el tamaño de la barra lateral */
+  padding: 20px;
+  text-align: center;  /* Centra los títulos */
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Centra el contenido horizontalmente */
+  justify-content: flex-start;  /* Alinea el contenido hacia arriba */
+  background-color: #444;  /* Fondo gris oscuro para el contenido */
+  min-height: 100vh;  /* Asegura que el contenido ocupe toda la pantalla */
+}
+
+h1 {
+  color: #f4f6f9;  /* Título principal en color claro */
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 30px; /* Separa el título principal del contenido */
+  padding-top: 30px;  /* Añade un espacio para separar el título del borde superior */
+}
+
+/* Estilo para h2 dentro del contenido */
+h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #f4f6f9;  /* Texto claro para los subtítulos */
+  margin-bottom: 20px;
+}
+
+/* Mejorar los estilos de los textos dentro de las cards */
+.card {
+  background-color: #555;  /* Fondo gris más claro para las cards */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 80%; /* Ajustamos el ancho para que no sea tan grande */
+  max-width: 800px;
+}
+
+.card p {
+  font-size: 16px;
+  color: #f4f6f9;  /* Texto claro para las cards */
+}
+
+/* Ajuste de títulos dentro de cards */
+.card h2 {
+  font-size: 24px;
+  color: #f4f6f9;  /* Títulos claros dentro de las cards */
+  margin-top: 0;
+  font-weight: bold;
+}
