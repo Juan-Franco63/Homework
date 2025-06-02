@@ -18,28 +18,16 @@ export default function GraphViewer() {
   const [graphs, setGraphs] = useState([]);
   const [selectedGraphId, setSelectedGraphId] = useState(null);
   const [selectedNode, setSelectedNode] = useState(null);
-<<<<<<< Updated upstream
-=======
-  const [sidebarOpen, setSidebarOpen] = useState(true);
->>>>>>> Stashed changes
   const [newGraphName, setNewGraphName] = useState("");
   const [nodeName, setNodeName] = useState("");
   const [sourceNode, setSourceNode] = useState("");
   const [targetNode, setTargetNode] = useState("");
-<<<<<<< Updated upstream
   const containerRef = useRef(null);
-=======
->>>>>>> Stashed changes
 
   const graphsRef = user
     ? collection(db, "graphs", user.uid, "myGraphs")
     : null;
 
-<<<<<<< Updated upstream
-=======
-  const containerRef = useRef(null);
-
->>>>>>> Stashed changes
   const loadGraphsList = async () => {
     if (!graphsRef) return;
     const snap = await getDocs(graphsRef);
@@ -71,40 +59,23 @@ export default function GraphViewer() {
 
   const createNewGraph = async () => {
     const docRef = await addDoc(graphsRef, {
-<<<<<<< Updated upstream
       name: newGraphName || `Grafo ${graphs.length + 1}`,
       graph: {
         nodes: [{ id: "Nodo1", x: 400, y: 300 }],
-=======
-      name: `Grafo ${graphs.length + 1}`,
-      graph: {
-        nodes: [{ id: "Nodo1", x: 100, y: 100 }],
->>>>>>> Stashed changes
         links: [],
       },
     });
     await loadGraphsList();
     setSelectedGraphId(docRef.id);
     loadGraphData(docRef.id);
-<<<<<<< Updated upstream
     setNewGraphName("");
-=======
->>>>>>> Stashed changes
   };
 
   const addNode = () => {
     if (!selectedGraphId) return;
     const updated = { ...graphData };
     const newId = `Nodo${updated.nodes.length + 1}`;
-<<<<<<< Updated upstream
     updated.nodes.push({ id: newId, x: 400, y: 300 });
-=======
-    updated.nodes.push({
-      id: newId,
-      x: Math.random() * 400,
-      y: Math.random() * 400,
-    });
->>>>>>> Stashed changes
     saveGraph(updated);
   };
 
@@ -120,23 +91,12 @@ export default function GraphViewer() {
   };
 
   const addLink = () => {
-<<<<<<< Updated upstream
     if (!selectedGraphId || !sourceNode || !targetNode) return;
     const updated = { ...graphData };
     updated.links.push({ source: sourceNode, target: targetNode });
     saveGraph(updated);
     setSourceNode("");
     setTargetNode("");
-=======
-    if (!selectedGraphId) return;
-    const updated = { ...graphData };
-    if (updated.nodes.length >= 2) {
-      const source = updated.nodes[updated.nodes.length - 2].id;
-      const target = updated.nodes[updated.nodes.length - 1].id;
-      updated.links.push({ source, target });
-      saveGraph(updated);
-    }
->>>>>>> Stashed changes
   };
 
   const removeLink = () => {
@@ -161,18 +121,6 @@ export default function GraphViewer() {
     setNodeName("");
   };
 
-<<<<<<< Updated upstream
-=======
-  const connectSelectedNodes = () => {
-    if (!selectedGraphId || !sourceNode || !targetNode || sourceNode === targetNode) return;
-    const updated = { ...graphData };
-    updated.links.push({ source: sourceNode, target: targetNode });
-    saveGraph(updated);
-    setSourceNode("");
-    setTargetNode("");
-  };
-
->>>>>>> Stashed changes
   useEffect(() => {
     loadGraphsList();
   }, [user]);
@@ -196,34 +144,20 @@ export default function GraphViewer() {
       linkLength: 120,
       disableLinkForce: false,
     },
-<<<<<<< Updated upstream
     width: containerRef.current?.clientWidth || window.innerWidth - 600,
     height: containerRef.current?.clientHeight || window.innerHeight,
-=======
-    width: containerRef.current?.offsetWidth || window.innerWidth,
-    height: containerRef.current?.offsetHeight || window.innerHeight,
->>>>>>> Stashed changes
   };
 
   const validNodes = graphData.nodes.map((n) => ({
     ...n,
-<<<<<<< Updated upstream
     x: n.x ?? 400,
     y: n.y ?? 300,
-=======
-    x: n.x ?? Math.random() * 400,
-    y: n.y ?? Math.random() * 400,
->>>>>>> Stashed changes
   }));
 
   return (
     <div className={styles.container} ref={containerRef}>
       <div className={styles.sidebar}>
         <h3>Centro de ciudades</h3>
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
         <ul>
           {graphs.map((g) => (
             <li
@@ -238,10 +172,6 @@ export default function GraphViewer() {
             </li>
           ))}
         </ul>
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
         <div className={styles.newGraph}>
           <input
             value={newGraphName}
@@ -277,34 +207,15 @@ export default function GraphViewer() {
           >
             Renombrar nodo
           </button>
-<<<<<<< Updated upstream
 
-=======
-          <button onClick={addLink} disabled={!selectedGraphId}>
-            Añadir conexión automática
-          </button>
-          <button onClick={removeLink} disabled={!selectedGraphId}>
-            Eliminar última conexión
-          </button>
-
-          <hr />
-
-          <label>Conectar nodos manualmente:</label>
->>>>>>> Stashed changes
           <select
             value={sourceNode}
             onChange={(e) => setSourceNode(e.target.value)}
           >
             <option value="">Origen</option>
-<<<<<<< Updated upstream
             {graphData.nodes.map((n) => (
               <option key={n.id} value={n.id}>
                 {n.id}
-=======
-            {graphData.nodes.map((node) => (
-              <option key={node.id} value={node.id}>
-                {node.id}
->>>>>>> Stashed changes
               </option>
             ))}
           </select>
@@ -314,21 +225,14 @@ export default function GraphViewer() {
             onChange={(e) => setTargetNode(e.target.value)}
           >
             <option value="">Destino</option>
-<<<<<<< Updated upstream
             {graphData.nodes.map((n) => (
               <option key={n.id} value={n.id}>
                 {n.id}
-=======
-            {graphData.nodes.map((node) => (
-              <option key={node.id} value={node.id}>
-                {node.id}
->>>>>>> Stashed changes
               </option>
             ))}
           </select>
 
           <button
-<<<<<<< Updated upstream
             onClick={addLink}
             disabled={!selectedGraphId || !sourceNode || !targetNode}
           >
@@ -336,12 +240,6 @@ export default function GraphViewer() {
           </button>
           <button onClick={removeLink} disabled={!selectedGraphId}>
             Eliminar conexión
-=======
-            onClick={connectSelectedNodes}
-            disabled={!sourceNode || !targetNode || sourceNode === targetNode}
-          >
-            Conectar seleccionados
->>>>>>> Stashed changes
           </button>
         </div>
       </div>

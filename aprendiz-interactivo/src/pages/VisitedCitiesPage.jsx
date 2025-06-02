@@ -50,14 +50,14 @@ export default function VisitedCitiesPage() {
         <>
           <ul className={styles.cityList}>
             {visitedCities.map((city, idx) => (
-              <li key={idx} className={styles.cityItem}>
-                {editingId === city._id ? (
+              <li key={city.id || idx} className={styles.cityItem}>
+                {editingId === city.id ? (
                   <>
                     <input
                       value={editedName}
                       onChange={(e) => setEditedName(e.target.value)}
                     />
-                    <button onClick={() => handleEditSave(city._id)}>Guardar</button>
+                    <button onClick={() => handleEditSave(city.id)}>Guardar</button>
                     <button onClick={() => setEditingId(null)}>Cancelar</button>
                   </>
                 ) : (
@@ -66,13 +66,13 @@ export default function VisitedCitiesPage() {
                     <small>{new Date(city.visitedAt).toLocaleString()}</small>
                     <button
                       onClick={() => {
-                        setEditingId(city._id);
+                        setEditingId(city.id);
                         setEditedName(city.name);
                       }}
                     >
                       Editar
                     </button>
-                    <button onClick={() => removeCity(city._id)}>Eliminar</button>
+                    <button onClick={() => removeCity(city.id)}>Eliminar</button>
                   </>
                 )}
               </li>

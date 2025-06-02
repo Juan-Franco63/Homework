@@ -1,4 +1,3 @@
-// src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Reader from "./pages/Reader";
@@ -14,15 +13,10 @@ import TopicPlayer from "./components/TopicPlayer";
 import TreeViewer from "./components/TreeViewer";
 import FirestoreTree from "./components/FirestoreTree";
 import GraphViewer from "./components/GraphViewer";
-<<<<<<< Updated upstream
 import VisitedCitiesPage from "./pages/VisitedCitiesPage";
 
 // ✅ Importa el proveedor de contexto
 import { VisitedCitiesProvider } from "./context/VisitedCitiesContext";
-=======
-import VisitedCitiesPage from "./pages/VisitedCitiesPage"; // NUEVO
-import { VisitedCitiesProvider } from "./context/VisitedCitiesContext"; // NUEVO
->>>>>>> Stashed changes
 
 export default function App() {
   return (
@@ -93,11 +87,7 @@ export default function App() {
             }
           />
           <Route
-<<<<<<< Updated upstream
             path="/graphs"
-=======
-            path="/graph"
->>>>>>> Stashed changes
             element={
               <PrivateRoute>
                 <GraphViewer />
