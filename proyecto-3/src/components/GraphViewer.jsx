@@ -1,121 +1,120 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Graph } from 'react-d3-graph';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase/firebaseConfig';
-import './GraphViewer.scss';
+// src/components/GraphViewer.jsx
+import { useEffect, useRef, useState } from "react";
+import { db } from "../firebase/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
+import { Graph } from "react-d3-graph";
+import "./GraphViewer.scss";
 
 export default function GraphViewer() {
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
-  const [zoomLevel, setZoomLevel] = useState(1);
-  const containerRef = useRef();
+  const scrollRef = useRef(null);
 
   useEffect(() => {
-    const fetchTreeData = async () => {
-      const treeDoc = await getDoc(doc(db, 'employeesTree', 'tree'));
-      if (treeDoc.exists()) {
-        const tree = treeDoc.data().data || [];
+    const fetchTree = async () => {
+      const treeRef = doc(db, "employeesTree", "tree");
+      const snapshot = await getDoc(treeRef);
+      if (snapshot.exists()) {
+        const data = snapshot.data().data || [];
+
         const nodes = [];
         const links = [];
 
-        const traverse = (list, parent = null) => {
-          for (const node of list) {
-            const id = node.attributes?.id;
-            if (!id) continue;
-            nodes.push({ id, label: node.name });
-            if (parent) links.push({ source: parent, target: id });
-            if (node.children) traverse(node.children, id);
+        const traverse = (node, parent = null) => {
+          if (!node?.attributes?.id) return;
+
+          nodes.push({ id: node.attributes.id, name: node.name });
+
+          if (parent) {
+            links.push({
+              source: parent.attributes.id,
+              target: node.attributes.id,
+            });
+          }
+
+          if (node.children) {
+            node.children.forEach((child) => traverse(child, node));
           }
         };
 
-        traverse(tree);
-        setGraphData({ nodes, links });
+        data.forEach((tree) => traverse(tree));
 
-        // Centrar visualmente después de cargar
-        setTimeout(() => {
-          handleCenterGraph();
-        }, 500);
+        setGraphData({ nodes, links });
+      } else {
+        console.warn("⚠️ No hay datos en Firestore.");
       }
     };
 
-    fetchTreeData();
+    fetchTree();
   }, []);
 
-  const handleZoomIn = () => {
-    setZoomLevel((z) => Math.min(z + 0.1, 3));
-  };
-
-  const handleZoomOut = () => {
-    setZoomLevel((z) => Math.max(z - 0.1, 0.2));
-  };
-
-  const handleZoomSlider = (e) => {
-    setZoomLevel(parseFloat(e.target.value));
-  };
-
-  const handleCenterGraph = () => {
-    const container = containerRef.current;
-    if (container) {
-      container.scrollTo({
-        top: container.scrollHeight / 2 - container.clientHeight / 2,
-        left: container.scrollWidth / 2 - container.clientWidth / 2,
-        behavior: 'smooth',
+  // Centrar scroll al inicio
+  useEffect(() => {
+    if (scrollRef.current) {
+      requestAnimationFrame(() => {
+        const el = scrollRef.current;
+        el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+        el.scrollTop = (el.scrollHeight - el.clientHeight) / 2;
       });
     }
-  };
+  }, [graphData]);
+
+  // Navegación con flechas del teclado
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const el = scrollRef.current;
+      if (!el || ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) return;
+
+      const scrollAmount = 40;
+
+      switch (e.key) {
+        case "ArrowUp":
+          el.scrollTop -= scrollAmount;
+          break;
+        case "ArrowDown":
+          el.scrollTop += scrollAmount;
+          break;
+        case "ArrowLeft":
+          el.scrollLeft -= scrollAmount;
+          break;
+        case "ArrowRight":
+          el.scrollLeft += scrollAmount;
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const config = {
+    directed: true,
     nodeHighlightBehavior: true,
     node: {
-      color: 'lightgreen',
+      color: "#93c5fd",
       size: 400,
-      highlightStrokeColor: 'blue',
-      labelProperty: 'label',
+      highlightStrokeColor: "#2563eb",
+      labelProperty: "name",
     },
     link: {
-      highlightColor: 'lightblue',
+      highlightColor: "#f59e0b",
     },
-    directed: true,
+    height: 1200,
+    width: 2000,
     panAndZoom: true,
-    height: 600,
-    width: 1000,
-    d3: {
-      gravity: -250,
-      linkLength: 180,
-      alphaTarget: 0.05,
-      // 🚫 eliminado el uso directo de zoomLevel aquí
-    },
     staticGraph: false,
-    initialAutomaticRearrangeAfterDropNode: true,
+    d3: {
+      gravity: -300,
+      linkLength: 200,
+    },
   };
 
   return (
-    <div className="graph-viewer-wrapper">
-      <h2>Visualización del grafo de empleados</h2>
-
-      <div className="controls">
-        <button onClick={handleZoomIn}>+</button>
-        <button onClick={handleZoomOut}>-</button>
-        <button onClick={handleCenterGraph}>Centrar grafo</button>
-        <input
-          type="range"
-          min="0.2"
-          max="3"
-          step="0.1"
-          value={zoomLevel}
-          onChange={handleZoomSlider}
-        />
-      </div>
-
-      <div ref={containerRef} className="graph-area">
-        {graphData.nodes.length > 0 ? (
-          <Graph
-            id="employee-graph"
-            data={graphData}
-            config={config}
-          />
-        ) : (
-          <p className="loading">Cargando grafo...</p>
-        )}
+    <div className="graph-viewer-container">
+      <h2>Visualización del Grafo Organizacional</h2>
+      <div className="graph-scrollable" ref={scrollRef}>
+        <Graph id="employee-graph" data={graphData} config={config} />
       </div>
     </div>
   );
