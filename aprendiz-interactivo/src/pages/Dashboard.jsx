@@ -40,6 +40,16 @@ export default function Dashboard() {
           <h3>Editor del árbol</h3>
           <p>Agrega o edita nodos en tu propio árbol interactivo.</p>
         </Link>
+
+        <Link to="/graphs" className={styles.card}>
+          <h3>Visualizador de grafos</h3>
+          <p>Explora y edita tus grafos interactivos.</p>
+        </Link>
+
+        <Link to="/visited" className={styles.card}>
+          <h3>Ciudades registradas</h3>
+          <p>Agrega o edita tu lista de ciudades independientes.</p>
+        </Link>
       </div>
     </div>
   );

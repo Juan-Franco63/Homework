@@ -1,0 +1,70 @@
+.visitedContainer {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.addForm {
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.addForm input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex: 1 1 150px;
+}
+
+.addForm button {
+  background: #225ed8;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.cityList {
+  list-style: none;
+  padding: 0;
+}
+
+.cityItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eef;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+
+.cityItem span {
+  font-weight: bold;
+}
+
+.cityItem small {
+  color: #555;
+  margin: 0 1rem;
+}
+
+.cityItem button {
+  margin-left: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  border: none;
+  border-radius: 5px;
+  background: #ccc;
+  cursor: pointer;
+}
+
+.clearButton {
+  background: #c00;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
