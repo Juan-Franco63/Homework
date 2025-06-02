@@ -1,0 +1,39 @@
+// src/components/GraphViewer.scss
+.graph-viewer-wrapper {
+  text-align: center;
+  color: white;
+  background-color: #080016;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.controls {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  button {
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 6px;
+  }
+
+  input[type='range'] {
+    width: 200px;
+  }
+}
+
+.graph-area {
+  margin: 0 auto;
+  width: 800px;
+  height: 500px;
+  border: 2px solid #ccc;
+  background: #fff;
+  overflow: scroll;
+  position: relative;
+}
