@@ -1,23 +1,33 @@
 .container {
   display: flex;
-  width: 100%;
   height: 100vh;
-  background-color: #f1f1f1;
-  position: relative;
-  overflow: hidden;
+  background-color: #f5f7fa;
+  font-family: 'Segoe UI', sans-serif;
 }
 
+/* Sidebar izquierda: lista de árboles */
 .sidebar {
-  width: 250px;
-  background-color: #ffffff;
+  width: 280px;
   padding: 1rem;
-  border-right: 1px solid #ccc;
+  background-color: #ffffff;
+  border-right: 1px solid #ddd;
   overflow-y: auto;
 
   h3 {
-    margin-bottom: 1rem;
     font-size: 1.2rem;
+    margin-bottom: 1rem;
     color: #333;
+  }
+
+  .searchInput {
+    margin-bottom: 1rem;
+
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
   }
 
   ul {
@@ -27,70 +37,90 @@
 
     li {
       padding: 0.5rem;
-      margin-bottom: 0.25rem;
+      border-radius: 4px;
+      margin-bottom: 0.3rem;
       cursor: pointer;
-      border-radius: 6px;
-      transition: background 0.2s;
+      transition: background-color 0.2s;
 
       &:hover {
-        background-color: #f0f0f0;
+        background-color: #e9ecef;
       }
-    }
 
-    .active {
-      background-color: #2e86de;
-      color: white;
-      font-weight: bold;
+      &.active {
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+      }
     }
   }
 
   .newTreeForm {
     margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
 
     input {
+      width: 100%;
       padding: 0.5rem;
+      margin-bottom: 0.5rem;
       border: 1px solid #ccc;
       border-radius: 4px;
     }
 
     button {
-      padding: 0.5rem;
-      background-color: #2e86de;
+      background-color: #17a2b8;
       color: white;
+      padding: 0.5rem;
       border: none;
       border-radius: 4px;
+      width: 100%;
       cursor: pointer;
 
       &:hover {
-        background-color: #1b65b8;
+        background-color: #138496;
       }
+    }
+  }
+
+  button {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #218838;
     }
   }
 }
 
+/* Zona central para el árbol D3 */
 .viewer {
   flex-grow: 1;
   position: relative;
-  overflow: auto;
+  background-color: #f4f6f8;
 }
 
-.menu {
-  position: absolute;
-  background: white;
-  border: 1px solid #ccc;
+/* Sidebar derecha: edición de nodos */
+.editorSidebar {
+  width: 280px;
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  width: 220px;
+  background-color: #ffffff;
+  border-left: 1px solid #ddd;
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #333;
+  }
 
   input {
     width: 100%;
     padding: 0.5rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
@@ -102,14 +132,42 @@
 
     button {
       padding: 0.5rem;
-      background-color: #2e86de;
-      color: white;
       border: none;
       border-radius: 4px;
+      color: white;
       cursor: pointer;
+      transition: background-color 0.2s;
 
-      &:hover {
-        background-color: #1b65b8;
+      &:nth-child(1) {
+        background-color: #007bff;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+
+      &:nth-child(2) {
+        background-color: #28a745;
+
+        &:hover {
+          background-color: #218838;
+        }
+      }
+
+      &:nth-child(3) {
+        background-color: #dc3545;
+
+        &:hover {
+          background-color: #c82333;
+        }
+      }
+
+      &:nth-child(4) {
+        background-color: #6c757d;
+
+        &:hover {
+          background-color: #5a6268;
+        }
       }
     }
   }

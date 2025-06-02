@@ -18,6 +18,10 @@ export function VisitedCitiesProvider({ children }) {
   const { user } = useAuth();
   const [visitedCities, setVisitedCities] = useState([]);
 
+<<<<<<< Updated upstream
+=======
+  // Cargar las ciudades desde Firestore cuando el usuario esté disponible
+>>>>>>> Stashed changes
   useEffect(() => {
     const fetchVisitedCities = async () => {
       if (!user) return;
@@ -36,20 +40,39 @@ export function VisitedCitiesProvider({ children }) {
     fetchVisitedCities();
   }, [user]);
 
+<<<<<<< Updated upstream
   const addCity = async (city) => {
     if (!user) return;
     const timestamp = new Date().toISOString();
+=======
+  // Agregar nueva ciudad
+  const addCity = async (city) => {
+    if (!user) return;
+
+    const timestamp = new Date().toISOString();
+
+>>>>>>> Stashed changes
     if (
       visitedCities.length &&
       visitedCities[visitedCities.length - 1].name.trim().toLowerCase() ===
         city.name.trim().toLowerCase()
+<<<<<<< Updated upstream
     ) return;
 
     const newCity = { ...city, visitedAt: timestamp };
+=======
+    ) {
+      return;
+    }
+
+    const newCity = { ...city, visitedAt: timestamp };
+
+>>>>>>> Stashed changes
     const docRef = await addDoc(
       collection(db, "users", user.uid, "visitedCities"),
       newCity
     );
+<<<<<<< Updated upstream
     setVisitedCities((prev) => [...prev, { ...newCity, _id: docRef.id }]);
   };
 
@@ -63,6 +86,30 @@ export function VisitedCitiesProvider({ children }) {
     if (!user) return;
     const cityRef = doc(db, "users", user.uid, "visitedCities", idToEdit);
     await updateDoc(cityRef, { name: newName });
+=======
+
+    setVisitedCities((prev) => [...prev, { ...newCity, _id: docRef.id }]);
+  };
+
+  // Eliminar una ciudad individual
+  const removeCity = async (idToDelete) => {
+    if (!user) return;
+
+    await deleteDoc(doc(db, "users", user.uid, "visitedCities", idToDelete));
+
+    setVisitedCities((prev) =>
+      prev.filter((city) => city._id !== idToDelete)
+    );
+  };
+
+  // Editar el nombre de una ciudad
+  const editCityName = async (idToEdit, newName) => {
+    if (!user) return;
+
+    const cityRef = doc(db, "users", user.uid, "visitedCities", idToEdit);
+    await updateDoc(cityRef, { name: newName });
+
+>>>>>>> Stashed changes
     setVisitedCities((prev) =>
       prev.map((city) =>
         city._id === idToEdit ? { ...city, name: newName } : city
@@ -70,13 +117,24 @@ export function VisitedCitiesProvider({ children }) {
     );
   };
 
+<<<<<<< Updated upstream
   const clearCities = async () => {
     if (!user) return;
+=======
+  // Limpiar toda la lista
+  const clearCities = async () => {
+    if (!user) return;
+
+>>>>>>> Stashed changes
     const q = collection(db, "users", user.uid, "visitedCities");
     const snapshot = await getDocs(q);
     const deletions = snapshot.docs.map((docu) =>
       deleteDoc(doc(db, "users", user.uid, "visitedCities", docu.id))
     );
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     await Promise.all(deletions);
     setVisitedCities([]);
   };

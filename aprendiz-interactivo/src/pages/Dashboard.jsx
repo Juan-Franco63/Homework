@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+// src/pages/Dashboard.jsx
+import { Link } from "react-router-dom"; 
 import { useAuth } from "../context/AuthContext";
 import styles from "./Dashboard.module.scss";
 
@@ -41,6 +42,7 @@ export default function Dashboard() {
           <p>Agrega o edita nodos en tu propio árbol interactivo.</p>
         </Link>
 
+<<<<<<< Updated upstream
         <Link to="/graphs" className={styles.card}>
           <h3>Visualizador de grafos</h3>
           <p>Explora y edita tus grafos interactivos.</p>
@@ -49,6 +51,16 @@ export default function Dashboard() {
         <Link to="/visited" className={styles.card}>
           <h3>Ciudades registradas</h3>
           <p>Agrega o edita tu lista de ciudades independientes.</p>
+=======
+        <Link to="/graph" className={styles.card}>
+          <h3>Centro de ciudades</h3>
+          <p>Administra las ciudades y sus conexiones en un grafo interactivo.</p>
+        </Link>
+
+        <Link to="/visited" className={styles.card}>
+          <h3>Ciudades visitadas</h3>
+          <p>Consulta la lista de ciudades que has explorado recientemente.</p>
+>>>>>>> Stashed changes
         </Link>
       </div>
     </div>

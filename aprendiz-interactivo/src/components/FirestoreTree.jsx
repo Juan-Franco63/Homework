@@ -21,8 +21,6 @@ export default function FirestoreTree() {
   const [treeData, setTreeData] = useState([]);
   const [selectedNodePath, setSelectedNodePath] = useState([]);
   const [newName, setNewName] = useState("");
-  const [showMenu, setShowMenu] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   const [newTreeName, setNewTreeName] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const containerRef = useRef(null);
@@ -73,26 +71,19 @@ export default function FirestoreTree() {
   };
 
   const createNewTree = async () => {
-    if (!newTreeName.trim()) return;
     const docRef = await addDoc(treesRef, {
-      name: newTreeName,
+      name: `Árbol ${trees.length + 1}`,
       tree: [
         {
-          name: newTreeName,
+          name: `Nodo raíz`,
           children: [],
           _collapsed: false,
         },
       ],
     });
-    setNewTreeName("");
     await loadTreesList();
     setSelectedTreeId(docRef.id);
     loadTreeData(docRef.id);
-  };
-
-  const getNodePath = (node, path = []) => {
-    if (!node || !node.name) return path;
-    return [...path, node.name];
   };
 
   const findNodeByPath = (nodes, path) => {
@@ -108,15 +99,28 @@ export default function FirestoreTree() {
     return null;
   };
 
-  const handleNodeClick = (nodeData, evt) => {
-    const rawNode = nodeData?.data;
-    if (!rawNode?.name) return;
+  const findPathToNode = (nodes, targetName, path = []) => {
+    for (const node of nodes) {
+      const currentPath = [...path, node.name];
+      if (node.name === targetName) {
+        return currentPath;
+      }
+      if (node.children) {
+        const result = findPathToNode(node.children, targetName, currentPath);
+        if (result) return result;
+      }
+    }
+    return null;
+  };
 
-    const path = getNodePath(rawNode);
+  const handleNodeClick = (nodeData, evt) => {
+    const rawNode = nodeData.__data__ || nodeData.data || nodeData;
+    const nodeName = rawNode.name;
+    const path = findPathToNode(treeData, nodeName);
+    if (!path) return;
+
     setSelectedNodePath(path);
-    setNewName(rawNode.name || "");
-    setMenuPosition({ x: evt.clientX, y: evt.clientY });
-    setShowMenu(true);
+    setNewName(nodeName);
   };
 
   const updateNodeName = () => {
@@ -126,7 +130,6 @@ export default function FirestoreTree() {
       node.name = newName;
       saveTree(updatedTree);
     }
-    setShowMenu(false);
   };
 
   const addChildNode = () => {
@@ -137,7 +140,6 @@ export default function FirestoreTree() {
       node.children.push({ name: "Nuevo nodo", _collapsed: false });
       saveTree(updatedTree);
     }
-    setShowMenu(false);
   };
 
   const deleteNode = () => {
@@ -161,16 +163,7 @@ export default function FirestoreTree() {
     };
     remove(updatedTree, selectedNodePath);
     saveTree(updatedTree);
-    setShowMenu(false);
-  };
-
-  const toggleCollapse = () => {
-    const updatedTree = structuredClone(treeData);
-    const node = findNodeByPath(updatedTree, selectedNodePath);
-    if (node && node.children && node.children.length > 0) {
-      node._collapsed = !node._collapsed;
-      saveTree(updatedTree);
-    }
+    setSelectedNodePath([]);
   };
 
   useEffect(() => {
@@ -240,6 +233,23 @@ export default function FirestoreTree() {
             Ir al visualizador
           </button>
         </div>
+
+        <div style={{ marginTop: "1rem" }}>
+          <button
+            onClick={createNewTree}
+            style={{
+              padding: "0.5rem",
+              width: "100%",
+              backgroundColor: "#28a745",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            Añadir nodo raíz
+          </button>
+        </div>
       </div>
 
       <div className={styles.viewer}>
@@ -255,28 +265,25 @@ export default function FirestoreTree() {
         )}
       </div>
 
-      {showMenu && (
-        <div
-          className={styles.menu}
-          style={{
-            top: menuPosition.y,
-            left: menuPosition.x,
-          }}
-        >
-          <h4>Editar nodo</h4>
-          <input
-            value={newName || ""}
-            onChange={(e) => setNewName(e.target.value)}
-          />
-          <div className={styles.buttons}>
-            <button onClick={updateNodeName}>Guardar nombre</button>
-            <button onClick={addChildNode}>Agregar hijo</button>
-            <button onClick={toggleCollapse}>Colapsar/Expandir</button>
-            <button onClick={deleteNode}>Eliminar nodo</button>
-            <button onClick={() => setShowMenu(false)}>Cerrar</button>
-          </div>
-        </div>
-      )}
+      <div className={styles.editorSidebar}>
+        <h4>Editar nodo</h4>
+        {selectedNodePath.length > 0 ? (
+          <>
+            <input
+              value={newName || ""}
+              onChange={(e) => setNewName(e.target.value)}
+            />
+            <div className={styles.buttons}>
+              <button onClick={updateNodeName}>Guardar nombre</button>
+              <button onClick={addChildNode}>Agregar hijo</button>
+              <button onClick={deleteNode}>Eliminar nodo</button>
+              <button onClick={() => setSelectedNodePath([])}>Cerrar</button>
+            </div>
+          </>
+        ) : (
+          <p>Selecciona un nodo para editarlo.</p>
+        )}
+      </div>
     </div>
   );
 }
